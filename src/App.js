@@ -1,26 +1,27 @@
 import { useEffect, useState } from "react";
-import { addTodoItem, markDone, todoItems } from "./api/todo";
+import { todoApi } from "./api/todo";
 import { TodoInput } from "./TodoInput";
 import { TodoTable } from "./TodoTable";
 
 const App = () => {
+  const api = todoApi();
   const [todos, setTodos] = useState([]);
 
   useEffect(() => {
-    todoItems().then((resp) => {
+    api.todoItems().then((resp) => {
       setTodos(resp.data);
     });
   });
 
   const addTodo = (value) => {
-    addTodoItem(value).then((resp) => {
+    api.addTodoItem(value).then((resp) => {
       setTodos(todos.concat([resp.data]));
     })
   }
 
   const completeTodo = (id) => {
-    markDone(id)
-      .then(todoItems)
+    api.markDone(id)
+      .then(api.todoItems)
       .then((resp) => {
         setTodos(resp.data);
       });

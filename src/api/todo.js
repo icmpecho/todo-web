@@ -1,5 +1,6 @@
 import axios from 'axios';
-
-export const todoItems = () => axios.get('/api/todoItems');
-export const addTodoItem = (name) => axios.post('/api/todoItems', { name });
-export const markDone = (id) => axios.post('/api/todoItems/complete', { id });
+export const todoApi = (baseUrl = '') => ({
+    todoItems: () => axios.get(`${baseUrl}/api/todoItems`),
+    addTodoItem: (name) => axios.post(`${baseUrl}/api/todoItems`, { name }),
+    markDone: (id) => axios.post(`${baseUrl}/api/todoItems/complete`, { id }),
+});
