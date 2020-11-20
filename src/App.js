@@ -8,22 +8,22 @@ const App = () => {
   const [todos, setTodos] = useState([]);
 
   useEffect(() => {
-    api.todoItems().then((resp) => {
-      setTodos(resp.data);
+    api.todoItems().then((todoItems) => {
+      setTodos(todoItems);
     });
   });
 
   const addTodo = (value) => {
-    api.addTodoItem(value).then((resp) => {
-      setTodos(todos.concat([resp.data]));
+    api.addTodoItem(value).then((createdTodoItem) => {
+      setTodos(todos.concat([createdTodoItem]));
     })
   }
 
   const completeTodo = (id) => {
     api.markDone(id)
       .then(api.todoItems)
-      .then((resp) => {
-        setTodos(resp.data);
+      .then((todoItems) => {
+        setTodos(todoItems);
       });
   }
 
