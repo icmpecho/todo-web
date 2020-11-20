@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { addTodoItem, todoItems } from "./api/todo";
+import { addTodoItem, markDone, todoItems } from "./api/todo";
 import { TodoInput } from "./TodoInput";
 import { TodoTable } from "./TodoTable";
 
@@ -13,18 +13,24 @@ const App = () => {
   });
 
   const addTodo = (value) => {
-    addTodoItem({
-      name: value,
-    }).then((resp) => {
+    addTodoItem(value).then((resp) => {
       setTodos(todos.concat([resp.data]));
     })
+  }
+
+  const completeTodo = (id) => {
+    markDone(id)
+      .then(todoItems)
+      .then((resp) => {
+        setTodos(resp.data);
+      });
   }
 
   return (
     <div>
       <h1>TodoList</h1>
       <TodoInput onSubmitInput={addTodo} />
-      <TodoTable todos={todos} />
+      <TodoTable todos={todos} onCompleteItem={completeTodo} />
     </div>
   );
 }

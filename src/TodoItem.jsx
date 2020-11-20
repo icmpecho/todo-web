@@ -1,6 +1,14 @@
-export const TodoItem = (props) => (
-    <tr>
-      <td>{props.name}</td>
-      <td>{props.isComplete.toString()}</td>
-    </tr>
-);
+export const TodoItem = (props) => {
+    const completeButton = (
+        <td>
+            <button onClick={() => props.onComplete(props.id)}>complete</button>
+        </td>
+    );
+    return (
+        <tr>
+            <td>{props.name}</td>
+            <td>{props.isComplete.toString()}</td>
+            { !props.isComplete && completeButton }
+        </tr>
+    );
+};

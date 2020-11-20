@@ -8,7 +8,7 @@ export const TodoTable = (props) => (
             </tr>
         </thead>
         <tbody>
-            { props.todos.map(i => <TodoItem {...i} key={i.id} />) }
+            { props.todos.map(i => <TodoItem {...i} key={i.id} onComplete={props.onCompleteItem}/>) }
         </tbody>
     </table>
 );
