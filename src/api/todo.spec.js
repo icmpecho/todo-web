@@ -61,7 +61,7 @@ pactWith({consumer: 'todo-web', provider: 'TodoApi'}, provider => {
                 }
                 return provider.addInteraction(interaction)
             });
-            it('returns empty array', async () => {
+            it('returns the actual todo items', async () => {
                 const api = todoApi(provider.mockService.baseUrl);
                 const result = await api.todoItems();
                 expect(result).toEqual([{
