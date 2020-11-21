@@ -14,13 +14,19 @@ pactWith({consumer: 'todo-web', provider: 'TodoApi'}, provider => {
               method: "GET",
               path: "/api/todoItems",
             },
-        }
+        };
+        const todoListResponse = {
+            status: 200,
+            headers: {
+              'Content-Type': term({
+                  generate: 'application/json',
+                  matcher: '.*application/json.*',
+              }),
+            },
+        };
         describe('when todo list is empty', () => {
             const emptyTodoListResponse = {
-                status: 200,
-                headers: {
-                  "Content-Type": "application/json",
-                },
+                ...todoListResponse,
                 body: [],
             }
             beforeEach(() => {
@@ -40,19 +46,13 @@ pactWith({consumer: 'todo-web', provider: 'TodoApi'}, provider => {
 
         describe('when todo list has an item', () => {
             const oneItemTodoListResponse = {
-                status: 200,
-                headers: {
-                  "Content-Type": "application/json",
-                },
+                ...todoListResponse,
                 body: [{
-                    id: term({
-                        generate: '2020-11-20T15:54:09.9567690+07:00',
-                        matcher: '.*',
-                    }),
+                    id: like('2020-11-20T15:54:09.9567690+07:00'),
                     name: like('Todo Item 1'),
                     isComplete: like(false),
                 }],
-            }
+            };
             beforeEach(() => {
                 const interaction = {
                   state: "Todo list has an item",
